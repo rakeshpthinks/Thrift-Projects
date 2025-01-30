@@ -1,4 +1,4 @@
-#include "gen-cpp/Calculator.h"
+#include "./../gen-cpp/Calculator.h"
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>

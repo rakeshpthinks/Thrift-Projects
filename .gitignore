@@ -1,0 +1,45 @@
+# Compiled source files
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.jar
+*.war
+*.ear
+
+# Thrift generated files
+gen-*
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml
+
+# Python specific files
+__pycache__/
+*.py[cod]
+
+# Node specific files
+node_modules/
+
+# Backup files
+*.bak
+*.swp
+*.tmp
+
+# CMake build artifacts
+CMakeFiles/
+*.txt.user
+cmake_install.cmake
+Makefile
+build/
