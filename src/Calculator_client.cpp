@@ -22,6 +22,21 @@ int main() {
     int32_t diff = client.subtract(30, 15);
     std::cout << "Result of subtract: " << diff << std::endl;
 
+    // Send a user-defined ComplexNumber object
+    tutorial::ComplexNumber num1;
+    num1.real = 1.5;
+    num1.imaginary = 2.5;
+
+    tutorial::ComplexNumber num2;
+    num2.real = 3.0;
+    num2.imaginary = 4.0;
+
+    tutorial::ComplexNumber result;
+    client.addComplex(result, num1, num2);
+
+    std::cout << "Result of Complex Addition: ("
+              << result.real << " + " << result.imaginary << "i)" << std::endl;
+
     transport->close();
 
     return 0;

@@ -24,6 +24,7 @@ class CalculatorIf {
   virtual ~CalculatorIf() {}
   virtual int32_t add(const int32_t num1, const int32_t num2) = 0;
   virtual int32_t subtract(const int32_t num1, const int32_t num2) = 0;
+  virtual void addComplex(ComplexNumber& _return, const ComplexNumber& num1, const ComplexNumber& num2) = 0;
 };
 
 class CalculatorIfFactory {
@@ -60,6 +61,9 @@ class CalculatorNull : virtual public CalculatorIf {
   int32_t subtract(const int32_t /* num1 */, const int32_t /* num2 */) override {
     int32_t _return = 0;
     return _return;
+  }
+  void addComplex(ComplexNumber& /* _return */, const ComplexNumber& /* num1 */, const ComplexNumber& /* num2 */) override {
+    return;
   }
 };
 
@@ -291,6 +295,117 @@ class Calculator_subtract_presult {
 
 };
 
+typedef struct _Calculator_addComplex_args__isset {
+  _Calculator_addComplex_args__isset() : num1(false), num2(false) {}
+  bool num1 :1;
+  bool num2 :1;
+} _Calculator_addComplex_args__isset;
+
+class Calculator_addComplex_args {
+ public:
+
+  Calculator_addComplex_args(const Calculator_addComplex_args&) noexcept;
+  Calculator_addComplex_args& operator=(const Calculator_addComplex_args&) noexcept;
+  Calculator_addComplex_args() noexcept {
+  }
+
+  virtual ~Calculator_addComplex_args() noexcept;
+  ComplexNumber num1;
+  ComplexNumber num2;
+
+  _Calculator_addComplex_args__isset __isset;
+
+  void __set_num1(const ComplexNumber& val);
+
+  void __set_num2(const ComplexNumber& val);
+
+  bool operator == (const Calculator_addComplex_args & rhs) const
+  {
+    if (!(num1 == rhs.num1))
+      return false;
+    if (!(num2 == rhs.num2))
+      return false;
+    return true;
+  }
+  bool operator != (const Calculator_addComplex_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Calculator_addComplex_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Calculator_addComplex_pargs {
+ public:
+
+
+  virtual ~Calculator_addComplex_pargs() noexcept;
+  const ComplexNumber* num1;
+  const ComplexNumber* num2;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Calculator_addComplex_result__isset {
+  _Calculator_addComplex_result__isset() : success(false) {}
+  bool success :1;
+} _Calculator_addComplex_result__isset;
+
+class Calculator_addComplex_result {
+ public:
+
+  Calculator_addComplex_result(const Calculator_addComplex_result&) noexcept;
+  Calculator_addComplex_result& operator=(const Calculator_addComplex_result&) noexcept;
+  Calculator_addComplex_result() noexcept {
+  }
+
+  virtual ~Calculator_addComplex_result() noexcept;
+  ComplexNumber success;
+
+  _Calculator_addComplex_result__isset __isset;
+
+  void __set_success(const ComplexNumber& val);
+
+  bool operator == (const Calculator_addComplex_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Calculator_addComplex_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Calculator_addComplex_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Calculator_addComplex_presult__isset {
+  _Calculator_addComplex_presult__isset() : success(false) {}
+  bool success :1;
+} _Calculator_addComplex_presult__isset;
+
+class Calculator_addComplex_presult {
+ public:
+
+
+  virtual ~Calculator_addComplex_presult() noexcept;
+  ComplexNumber* success;
+
+  _Calculator_addComplex_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class CalculatorClient : virtual public CalculatorIf {
  public:
   CalculatorClient(std::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -322,6 +437,9 @@ class CalculatorClient : virtual public CalculatorIf {
   int32_t subtract(const int32_t num1, const int32_t num2) override;
   void send_subtract(const int32_t num1, const int32_t num2);
   int32_t recv_subtract();
+  void addComplex(ComplexNumber& _return, const ComplexNumber& num1, const ComplexNumber& num2) override;
+  void send_addComplex(const ComplexNumber& num1, const ComplexNumber& num2);
+  void recv_addComplex(ComplexNumber& _return);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -339,11 +457,13 @@ class CalculatorProcessor : public ::apache::thrift::TDispatchProcessor {
   ProcessMap processMap_;
   void process_add(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_subtract(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_addComplex(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   CalculatorProcessor(::std::shared_ptr<CalculatorIf> iface) :
     iface_(iface) {
     processMap_["add"] = &CalculatorProcessor::process_add;
     processMap_["subtract"] = &CalculatorProcessor::process_subtract;
+    processMap_["addComplex"] = &CalculatorProcessor::process_addComplex;
   }
 
   virtual ~CalculatorProcessor() {}
@@ -390,6 +510,16 @@ class CalculatorMultiface : virtual public CalculatorIf {
     return ifaces_[i]->subtract(num1, num2);
   }
 
+  void addComplex(ComplexNumber& _return, const ComplexNumber& num1, const ComplexNumber& num2) override {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->addComplex(_return, num1, num2);
+    }
+    ifaces_[i]->addComplex(_return, num1, num2);
+    return;
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -428,6 +558,9 @@ class CalculatorConcurrentClient : virtual public CalculatorIf {
   int32_t subtract(const int32_t num1, const int32_t num2) override;
   int32_t send_subtract(const int32_t num1, const int32_t num2);
   int32_t recv_subtract(const int32_t seqid);
+  void addComplex(ComplexNumber& _return, const ComplexNumber& num1, const ComplexNumber& num2) override;
+  int32_t send_addComplex(const ComplexNumber& num1, const ComplexNumber& num2);
+  void recv_addComplex(ComplexNumber& _return, const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

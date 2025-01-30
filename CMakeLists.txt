@@ -10,8 +10,8 @@ set(THRIFT_LIB thrift)
 include_directories(${THRIFT_GEN_DIR} ${THRIFT_INCLUDE_DIR})
 link_directories(/usr/local/lib)
 
-add_executable(server src/Calculator_server.cpp ${THRIFT_GEN_DIR}/Calculator.cpp)
-add_executable(client src/Calculator_client.cpp ${THRIFT_GEN_DIR}/Calculator.cpp)
+add_executable(server src/Calculator_server.cpp ${THRIFT_GEN_DIR}/Calculator.cpp ${THRIFT_GEN_DIR}/calculator_types.cpp)
+add_executable(client src/Calculator_client.cpp ${THRIFT_GEN_DIR}/Calculator.cpp ${THRIFT_GEN_DIR}/calculator_types.cpp)
 
 target_link_libraries(server ${THRIFT_LIB} Threads::Threads)
 target_link_libraries(client ${THRIFT_LIB} Threads::Threads)

@@ -22,6 +22,15 @@ public:
         std::cout << "Subtracting: " << num1 << " - " << num2 << std::endl;
         return num1 - num2;
     }
+    void addComplex(tutorial::ComplexNumber& _return, const tutorial::ComplexNumber& num1, const tutorial::ComplexNumber& num2) override {
+        _return.real = num1.real + num2.real;
+        _return.imaginary = num1.imaginary + num2.imaginary;
+
+        std::cout << "Adding Complex Numbers: ("
+                  << num1.real << " + " << num1.imaginary << "i) + ("
+                  << num2.real << " + " << num2.imaginary << "i) = ("
+                  << _return.real << " + " << _return.imaginary << "i)" << std::endl;
+    }
 };
 
 

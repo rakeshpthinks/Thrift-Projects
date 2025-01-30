@@ -30,6 +30,11 @@ class CalculatorHandler : virtual public CalculatorIf {
     printf("subtract\n");
   }
 
+  void addComplex(ComplexNumber& _return, const ComplexNumber& num1, const ComplexNumber& num2) {
+    // Your implementation goes here
+    printf("addComplex\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

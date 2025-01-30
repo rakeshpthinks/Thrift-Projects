@@ -21,6 +21,58 @@
 
 namespace tutorial {
 
+class ComplexNumber;
+
+typedef struct _ComplexNumber__isset {
+  _ComplexNumber__isset() : real(false), imaginary(false) {}
+  bool real :1;
+  bool imaginary :1;
+} _ComplexNumber__isset;
+
+class ComplexNumber : public virtual ::apache::thrift::TBase {
+ public:
+
+  ComplexNumber(const ComplexNumber&) noexcept;
+  ComplexNumber& operator=(const ComplexNumber&) noexcept;
+  ComplexNumber() noexcept
+                : real(0),
+                  imaginary(0) {
+  }
+
+  virtual ~ComplexNumber() noexcept;
+  double real;
+  double imaginary;
+
+  _ComplexNumber__isset __isset;
+
+  void __set_real(const double val);
+
+  void __set_imaginary(const double val);
+
+  bool operator == (const ComplexNumber & rhs) const
+  {
+    if (!(real == rhs.real))
+      return false;
+    if (!(imaginary == rhs.imaginary))
+      return false;
+    return true;
+  }
+  bool operator != (const ComplexNumber &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ComplexNumber & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot) override;
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const override;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ComplexNumber &a, ComplexNumber &b);
+
+std::ostream& operator<<(std::ostream& out, const ComplexNumber& obj);
+
 } // namespace
 
 #endif
